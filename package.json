@@ -1,0 +1,36 @@
+{
+  "name": "crime-slunk-scene",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test:integration": "playwright test",
+    "test:unit": "vitest"
+  },
+  "dependencies": {
+    "@effect/schema": "^0.72.2",
+    "effect": "^3.7.2",
+    "next": "15.0.0-canary.143",
+    "react": "19.0.0-rc-4c58fce7-20240904",
+    "react-dom": "19.0.0-rc-4c58fce7-20240904"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.46.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.0.1",
+    "@types/node": "^22.5.4",
+    "@types/react": "npm:types-react@rc",
+    "@types/react-dom": "npm:types-react-dom@rc",
+    "@vanilla-extract/css": "^1.15.5",
+    "@vanilla-extract/next-plugin": "^2.4.5",
+    "@vanilla-extract/vite-plugin": "^4.0.15",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "happy-dom": "^15.7.3",
+    "lefthook": "^1.7.15",
+    "typescript": "^5.5.4",
+    "vite-tsconfig-paths": "^5.0.1",
+    "vitest": "^2.0.5"
+  }
+}
