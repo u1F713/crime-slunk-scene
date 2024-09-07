@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@effect/schema": "^0.72.2",
+    "@mdx-js/mdx": "^3.0.1",
     "effect": "^3.7.2",
     "next": "15.0.0-canary.143",
     "react": "19.0.0-rc-4c58fce7-20240904",
-    "react-dom": "19.0.0-rc-4c58fce7-20240904"
+    "react-dom": "19.0.0-rc-4c58fce7-20240904",
+    "yaml": "^2.5.1"
   },
   "devDependencies": {
     "@playwright/test": "1.46.0",
