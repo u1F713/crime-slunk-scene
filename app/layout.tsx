@@ -1,6 +1,12 @@
 import type {Metadata} from 'next'
+import localFont from 'next/font/local'
 import type {FunctionComponent} from 'react'
 import './global.css.ts'
+
+const monaspaceNeon = localFont({
+  src: './assets/MonaspaceNeonVF.ttf',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Crime Slunk Scene',
@@ -9,7 +15,7 @@ export const metadata: Metadata = {
 const RootLayout: FunctionComponent<{children: React.ReactNode}> = ({
   children,
 }) => (
-  <html lang="en">
+  <html lang="en" className={monaspaceNeon.className}>
     <body>{children}</body>
   </html>
 )

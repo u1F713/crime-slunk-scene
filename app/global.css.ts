@@ -8,6 +8,4 @@ globalStyle('*, :after, :before', {
 
 globalStyle(':root', {
   colorScheme: 'dark light',
-  fontFamily: 'system-ui',
-  fontVariantNumeric: 'tabular-nums lining-nums',
 })
