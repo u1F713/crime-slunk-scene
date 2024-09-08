@@ -9,3 +9,11 @@ globalStyle('*, :after, :before', {
 globalStyle(':root', {
   colorScheme: 'dark light',
 })
+
+globalStyle('h1', {
+  marginBottom: '1.2rem',
+})
+
+globalStyle('p', {
+  marginBottom: '1em',
+})
