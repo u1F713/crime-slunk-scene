@@ -1,8 +1,9 @@
 import path from 'node:path'
+import {Schema} from '@effect/schema'
 import {render} from '@testing-library/react'
 import {Chunk, Effect, Stream} from 'effect'
 import {describe, expect, test} from 'vitest'
-import {directoryStream, evaluateFile} from '../utils.ts'
+import {directoryStream, readFile} from '../utils.ts'
 
 describe('content/utils', () => {
   const directory = path.join(process.cwd(), 'app', 'content', '__tests__')
@@ -14,12 +15,13 @@ describe('content/utils', () => {
     expect(Chunk.isChunk(collection)).toBe(true)
   })
 
-  test('evaluate component', async () => {
+  test('read file content', async () => {
     const file = path.join(directory, 'document.mdx')
-    const entry = await Effect.runPromise(evaluateFile(file))
-    const Content = await entry.evalComponent()
-    const result = render(<Content />)
+    const task = readFile(file, Schema.Struct({key: Schema.String}))
+    const entry = await Effect.runPromise(task)
+    const Content = await entry.render()
 
-    expect(result.container.textContent).toBe('test')
+    const {container} = render(<Content />)
+    expect(container.textContent).toBe('test')
   })
 })

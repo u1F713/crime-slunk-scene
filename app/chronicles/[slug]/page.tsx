@@ -1,32 +1,30 @@
-import path from 'node:path'
 import {Chunk, Effect, Stream, pipe} from 'effect'
 import type {NextPage} from 'next'
-import {directoryStream, evaluateFile} from '~/content/utils'
-
-const _directory = path.join(process.cwd(), 'app', 'content', 'chronicles')
+import {getCollection} from '~/content/utils'
 
 export const generateStaticParams = async () => {
-  const stream = Stream.flatMap(directoryStream(_directory), evaluateFile)
-  const entries = await Effect.runPromise(Stream.runCollect(stream))
+  const entries = await Effect.runPromise(
+    pipe(
+      Stream.runCollect(getCollection('posts')),
+      Effect.map(Chunk.toReadonlyArray),
+    ),
+  )
 
-  return Chunk.toReadonlyArray(entries).map(({slug}) => {
+  return entries.map(({slug}) => {
     slug
   })
 }
 
 const Chronicle: NextPage<{params: {slug: string}}> = async ({params}) => {
-  const collection = pipe(
-    directoryStream(_directory),
-    Stream.flatMap(evaluateFile),
-    Stream.find(f => f.slug === params.slug),
-    Stream.runCollect,
+  const {render} = await Effect.runPromise(
+    pipe(
+      getCollection('posts'),
+      Stream.find(f => f.slug === params.slug),
+      Stream.runCollect,
+      Effect.flatMap(Chunk.get(0)),
+    ),
   )
-
-  const entry = await Effect.runPromise(
-    Effect.flatMap(collection, Chunk.get(0)),
-  )
-
-  const Content = await entry.evalComponent()
+  const Content = await render()
 
   return (
     <div>

@@ -15,6 +15,7 @@
     "allowImportingTsExtensions": true,
     "jsx": "preserve",
     "plugins": [{ "name": "next" }],
+    "exactOptionalPropertyTypes": true,
     "paths": { "~/*": ["./app/*"] }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

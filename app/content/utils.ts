@@ -1,40 +1,51 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import {Schema} from '@effect/schema'
 import {type EvaluateOptions, compile, run} from '@mdx-js/mdx'
-import {Data, Effect, Layer, ManagedRuntime, Stream, pipe} from 'effect'
+import type {VFile} from '@mdx-js/mdx/internal-create-format-aware-processors'
+import {Data, Effect, Stream, pipe} from 'effect'
 import * as runtime from 'react/jsx-runtime'
 import yaml from 'yaml'
+import * as collections from './schemas.ts'
 
 class FrontmatterNotFound extends Data.TaggedError(
   '@chronicles/FrontMatterNotFound',
-)<{file: string}> {}
+)<{content: string}> {}
 
-export const parseFrontmatter = (fileContent: string) =>
+const compileContent = (content: string) =>
+  Effect.promise(() => compile(content, {outputFormat: 'function-body'}))
+
+const renderContent = (content: VFile) =>
+  pipe(
+    Effect.promise(() => run(content, runtime as EvaluateOptions)),
+    Effect.map(({default: Content}) => Content),
+  )
+
+export const parseFrontmatter = <A, I>(
+  content: string,
+  schema: Schema.Schema<A, I>,
+) =>
   Effect.gen(function* () {
-    const frontmatterBlock = fileContent.match(/---(.+?)---/s)?.[1]
+    const frontmatterBlock = content.match(/---(.*?)---/s)?.[1]
+    const frontmatter = frontmatterBlock
+      ? yaml.parse(frontmatterBlock)
+      : yield* new FrontmatterNotFound({content})
 
-    return frontmatterBlock === undefined
-      ? yield* new FrontmatterNotFound({file: fileContent})
-      : yaml.parse(frontmatterBlock)
+    return yield* Schema.decode(schema)(frontmatter)
   })
 
-export const evaluateFile = (file: string) =>
+export const readFile = <A, I>(
+  file: string,
+  collection: Schema.Schema<A, I>,
+) =>
   Effect.gen(function* () {
     const content = yield* Effect.promise(() => fs.readFile(file, 'utf-8'))
-    const vfile = yield* Effect.tryPromise(() =>
-      compile(content.replace(/---(.+?)---/s, ''), {
-        outputFormat: 'function-body',
-      }),
-    )
-    const effectRuntime = ManagedRuntime.make(Layer.empty)
+    const vfile = yield* compileContent(content.replace(/---(.*?)---/s, ''))
+    const frontmatter = yield* parseFrontmatter(content, collection)
+    const {base: id, name: slug} = path.parse(file)
+    const render = () => Effect.runPromise(renderContent(vfile))
 
-    return {
-      id: path.parse(file).base,
-      slug: path.parse(file).name,
-      getFrontmatter: () => effectRuntime.runSync(parseFrontmatter(content)),
-      evalComponent: () =>
-        run(vfile, runtime as EvaluateOptions).then(_ => _.default),
-    }
+    return {id, slug, frontmatter, render}
   })
 
 export const directoryStream = (directory: string) =>
@@ -42,4 +53,10 @@ export const directoryStream = (directory: string) =>
     Stream.fromIterableEffect(Effect.tryPromise(() => fs.readdir(directory))),
     Stream.filter(file => /\.(mdx|md)$/.test(path.extname(file))),
     Stream.map(file => path.join(directory, file)),
+  )
+
+export const getCollection = (collection: keyof typeof collections) =>
+  Stream.flatMap(
+    directoryStream(path.join(process.cwd(), 'app', 'content', collection)),
+    file => readFile(file, collections[collection]),
   )
