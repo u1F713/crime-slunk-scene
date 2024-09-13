@@ -2,18 +2,15 @@ import {Chunk, Effect, Stream, pipe} from 'effect'
 import type {NextPage} from 'next'
 import {getCollection} from '~/content/utils'
 
-export const generateStaticParams = async () => {
-  const entries = await Effect.runPromise(
+export const generateStaticParams = () =>
+  Effect.runPromise(
     pipe(
-      Stream.runCollect(getCollection('posts')),
-      Effect.map(Chunk.toReadonlyArray),
+      getCollection('posts'),
+      Stream.map(({slug}) => ({slug})),
+      Stream.runCollect,
+      Effect.map(Chunk.toArray),
     ),
   )
-
-  return entries.map(({slug}) => {
-    slug
-  })
-}
 
 const Chronicle: NextPage<{params: {slug: string}}> = async ({params}) => {
   const {render} = await Effect.runPromise(
