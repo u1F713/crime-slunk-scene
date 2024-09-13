@@ -1,6 +1,7 @@
 import {Chunk, Effect, Stream, pipe} from 'effect'
 import type {NextPage} from 'next'
 import {getCollection} from '~/content/utils'
+import * as styles from '../chronicles.css.ts'
 
 export const generateStaticParams = () =>
   Effect.runPromise(
@@ -13,7 +14,7 @@ export const generateStaticParams = () =>
   )
 
 const Chronicle: NextPage<{params: {slug: string}}> = async ({params}) => {
-  const {render} = await Effect.runPromise(
+  const {render, frontmatter} = await Effect.runPromise(
     pipe(
       getCollection('posts'),
       Stream.find(f => f.slug === params.slug),
@@ -25,6 +26,10 @@ const Chronicle: NextPage<{params: {slug: string}}> = async ({params}) => {
 
   return (
     <div>
+      <aside className={styles.postData}>
+        <h1>{frontmatter.title}</h1>
+        <p>{frontmatter.description}</p>
+      </aside>
       <Content />
     </div>
   )

@@ -17,3 +17,8 @@ globalStyle('h1', {
 globalStyle('p', {
   marginBottom: '1em',
 })
+
+globalStyle('a', {
+  color: 'currentcolor',
+  textDecoration: 'none',
+})
