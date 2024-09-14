@@ -24,6 +24,10 @@ const RootLayout: FunctionComponent<{children: React.ReactNode}> = ({
           Crime Slunk Scene
         </Link>
         <nav className={styles.navigation}>
+          <Link className={styles.navigationLink} href="/about">
+            About
+          </Link>
+
           <Link className={styles.navigationLink} href="/chronicles">
             Blog
           </Link>
