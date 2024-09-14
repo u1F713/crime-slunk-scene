@@ -18,3 +18,8 @@ export const postTitle = style({
 })
 
 export const date = style({color: '#BCBCBC'})
+
+export const article = style({
+  maxWidth: '42rem',
+  margin: 'auto',
+})

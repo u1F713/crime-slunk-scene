@@ -25,7 +25,7 @@ const Chronicle: NextPage<{params: {slug: string}}> = async ({params}) => {
   const Content = await render()
 
   return (
-    <div>
+    <div className={styles.article}>
       <aside className={styles.postData}>
         <h1>{frontmatter.title}</h1>
         <p>{frontmatter.description}</p>
