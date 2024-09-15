@@ -6,7 +6,7 @@ import * as styles from './app.css.ts'
 import './global.css.ts'
 
 const monaspaceNeon = localFont({
-  src: './assets/MonaspaceNeonVF.ttf',
+  src: './fonts/MonaspaceNeonVF.ttf',
   display: 'swap',
 })
 
