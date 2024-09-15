@@ -9,7 +9,7 @@ export const pageWrapper = style({
 export const header = style({
   display: 'flex',
   padding: '1em 0',
-  marginBottom: '2em',
+  marginBottom: '4em',
 })
 
 export const homeAnchor = style({
@@ -32,3 +32,11 @@ export const navigationLink = style({
     color: 'currentcolor',
   },
 })
+
+export const collectionList = style({
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '1em',
+})
+
+export const heading3 = style({fontSize: '2rem', margin: '1.4em 0 .5em'})
