@@ -1,10 +1,13 @@
 import {style} from '@vanilla-extract/css'
 
-export const postData = style({
-  marginBottom: '3em',
+export const entityCard = style({
+  padding: '1em',
+  borderRadius: '3px',
+  outline: '1px solid oklch(0.8 0 0 / 0.83)',
+  height: '100%',
 })
 
-export const postTitle = style({
+export const cardTitle = style({
   fontSize: '1.24em',
   marginBottom: '.4em',
   ':hover': {
@@ -13,8 +16,3 @@ export const postTitle = style({
 })
 
 export const date = style({color: '#BCBCBC'})
-
-export const article = style({
-  maxWidth: '42rem',
-  margin: 'auto',
-})

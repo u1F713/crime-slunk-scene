@@ -10,6 +10,7 @@
     "test:unit": "vitest"
   },
   "dependencies": {
+    "@cloudinary/url-gen": "^1.21.0",
     "@effect/schema": "^0.72.2",
     "@mdx-js/mdx": "^3.0.1",
     "effect": "^3.7.2",
