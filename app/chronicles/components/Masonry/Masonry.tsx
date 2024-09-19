@@ -46,10 +46,10 @@ const Masonry: FunctionComponent<{children: JSX.Element[]}> = ({children}) => {
 
   return (
     <div className={styles.mansoryContainer} ref={containerRef}>
-      <ul className={styles.mansoryList}>
+      <ul className={styles.mansory}>
         {columns.map((col, key) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-          <div key={key} className={styles.mansoryItem}>
+          <div key={key} className={styles.mansoryColumn}>
             {col.map(item => (
               <li key={item.key}>{item}</li>
             ))}

@@ -15,4 +15,11 @@ export const cardTitle = style({
   },
 })
 
+export const coverImage = style({
+  display: 'block',
+  height: 'auto',
+  maxWidth: '100%',
+  margin: 'auto',
+})
+
 export const date = style({color: '#BCBCBC'})

@@ -7,15 +7,17 @@ export const mansoryContainer = style({
   containerType: 'inline-size',
 })
 
-export const mansoryList = style({
+export const mansory = style({
   display: 'flex',
   gap: '1em',
   listStyle: 'none',
   justifyContent: 'center',
+  padding: '2em 0',
 })
 
-export const mansoryItem = style({
+export const mansoryColumn = style({
   display: 'flex',
   gap: '1em',
   flexDirection: 'column',
+  maxWidth: '300px',
 })
