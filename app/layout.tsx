@@ -2,8 +2,8 @@ import type {Metadata} from 'next'
 import localFont from 'next/font/local'
 import Link from 'next/link'
 import type {FunctionComponent} from 'react'
-import * as styles from './app.css.ts'
-import './global.css.ts'
+import * as styles from './styles/app.css.ts'
+import './styles/global.css'
 
 const jetBrainsMono = localFont({
   src: [

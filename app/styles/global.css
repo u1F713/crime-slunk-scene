@@ -1,0 +1,30 @@
+*,
+:after,
+:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark light;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 1.2rem;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: currentcolor;
+  text-Decoration: none;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+}

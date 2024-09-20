@@ -2,8 +2,8 @@ import {Cloudinary} from '@cloudinary/url-gen/index'
 import {Chunk, Effect, Stream} from 'effect'
 import type {NextPage} from 'next'
 import Link from 'next/link'
-import * as styles from './app.css.ts'
 import {getCollection} from './content/utils.ts'
+import * as styles from './styles/app.css.ts'
 
 const cloud = new Cloudinary({
   cloud: {cloudName: process.env.PUBLIC_CLOUDINARY_CLOUD_NAME ?? ''},
@@ -52,7 +52,7 @@ const Home: NextPage = async () => {
 
       <div>
         <h3 className={styles.heading3}>Latest posts</h3>
-        <ul className={styles.collectionList}>
+        <ul className={styles.collections}>
           {collection.map(c => (
             <Link key={c.id} href={`/chronicles/${c.slug}`}>
               <h2 className={styles.heading2}>{c.frontmatter.title}</h2>

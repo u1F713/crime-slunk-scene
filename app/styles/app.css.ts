@@ -59,7 +59,7 @@ export const mainModule = style({
   },
 })
 
-export const collectionList = style({
+export const collections = style({
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   gap: '1em',
