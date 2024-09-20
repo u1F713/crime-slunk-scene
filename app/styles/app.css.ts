@@ -49,8 +49,8 @@ export const homeContainer = style({
 export const mainModule = style({
   display: 'grid',
   justifyContent: 'center',
-  marginBottom: '8em',
-  gap: '4em',
+  marginBottom: '2em',
+  gap: '2em',
 
   '@container': {
     [`${HomeContainerName} (width >= 40em)`]: {
@@ -61,6 +61,11 @@ export const mainModule = style({
 
 export const collections = style({
   display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
-  gap: '1em',
+  gap: '2em',
+
+  '@container': {
+    [`${HomeContainerName} (width >= 40em)`]: {
+      gridTemplateColumns: '1fr 1fr',
+    },
+  },
 })
