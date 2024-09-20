@@ -5,8 +5,12 @@ import type {FunctionComponent} from 'react'
 import * as styles from './app.css.ts'
 import './global.css.ts'
 
-const monaspaceNeon = localFont({
-  src: './fonts/MonaspaceNeonVF.ttf',
+const jetBrainsMono = localFont({
+  src: [
+    {path: './fonts/JetBrainsMono.ttf', style: 'normal'},
+    {path: './fonts/JetBrainsMono-Italic.ttf', style: 'italic'},
+  ],
+
   display: 'swap',
 })
 
@@ -17,7 +21,7 @@ export const metadata: Metadata = {
 const RootLayout: FunctionComponent<{children: React.ReactNode}> = ({
   children,
 }) => (
-  <html lang="en" className={monaspaceNeon.className}>
+  <html lang="en" className={jetBrainsMono.className}>
     <body className={styles.pageWrapper}>
       <header className={styles.header}>
         <Link className={styles.homeAnchor} href="/">
