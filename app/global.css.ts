@@ -11,6 +11,7 @@ globalStyle(':root', {
 })
 
 globalStyle('h1', {
+  fontSize: '2em',
   marginBottom: '1.2rem',
 })
 
@@ -21,4 +22,9 @@ globalStyle('p', {
 globalStyle('a', {
   color: 'currentcolor',
   textDecoration: 'none',
+})
+
+globalStyle('img', {
+  height: 'auto',
+  maxWidth: '100%',
 })

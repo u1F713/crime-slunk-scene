@@ -1,4 +1,8 @@
-import {style} from '@vanilla-extract/css'
+import {createContainer, style} from '@vanilla-extract/css'
+
+const heading = style({margin: '.6em 0'})
+export const heading2 = style([heading, {fontSize: '1.4rem'}])
+export const heading3 = style([heading, {fontSize: '2rem'}])
 
 export const pageWrapper = style({
   padding: '0 1em',
@@ -33,10 +37,30 @@ export const navigationLink = style({
   },
 })
 
+const HomeContainerName = createContainer()
+
+export const homeContainer = style({
+  containerType: 'inline-size',
+  containerName: HomeContainerName,
+  maxWidth: '60em',
+  margin: 'auto',
+})
+
+export const mainModule = style({
+  display: 'grid',
+  justifyContent: 'center',
+  marginBottom: '8em',
+  gap: '4em',
+
+  '@container': {
+    [`${HomeContainerName} (width >= 40em)`]: {
+      gridTemplateColumns: '2fr 3fr',
+    },
+  },
+})
+
 export const collectionList = style({
   display: 'grid',
   gridTemplateColumns: '1fr 1fr',
   gap: '1em',
 })
-
-export const heading3 = style({fontSize: '2rem', margin: '1.4em 0 .5em'})
