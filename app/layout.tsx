@@ -10,7 +10,6 @@ const jetBrainsMono = localFont({
     {path: './fonts/JetBrainsMono.ttf', style: 'normal'},
     {path: './fonts/JetBrainsMono-Italic.ttf', style: 'italic'},
   ],
-
   display: 'swap',
 })
 
