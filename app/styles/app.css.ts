@@ -2,10 +2,6 @@ import {createVar, style} from '@vanilla-extract/css'
 
 export const pageMaxWidth = createVar()
 
-const heading = style({margin: '.6em 0'})
-export const heading2 = style([heading, {fontSize: '1.4rem'}])
-export const heading3 = style([heading, {fontSize: '2rem'}])
-
 export const page = style({
   background: '#01010181',
   vars: {
