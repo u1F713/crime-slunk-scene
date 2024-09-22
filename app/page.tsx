@@ -50,7 +50,7 @@ const Home: NextPage = async () => {
 
       <div>
         <h3 className={styles.heading3}>Latest posts</h3>
-        <ul className={styles.collections}>
+        <ul className={styles.latestPost}>
           {collection.map(c => (
             <Link key={c.id} href={`/chronicles/${c.slug}`}>
               <h2 className={styles.heading2}>{c.frontmatter.title}</h2>

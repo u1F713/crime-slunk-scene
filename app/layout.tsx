@@ -1,7 +1,7 @@
 import type {Metadata} from 'next'
 import localFont from 'next/font/local'
-import Link from 'next/link'
 import type {FunctionComponent} from 'react'
+import Header from './components/header/header.tsx'
 import * as styles from './styles/app.css.ts'
 import './styles/global.css'
 
@@ -22,22 +22,9 @@ const RootLayout: FunctionComponent<{children: React.ReactNode}> = ({
   children,
 }) => (
   <html lang="en" className={jetBrainsMono.className}>
-    <body className={styles.pageWrapper}>
-      <header className={styles.header}>
-        <Link className={styles.homeAnchor} href="/">
-          Crime Slunk Scene
-        </Link>
-        <nav className={styles.navigation}>
-          <Link className={styles.navigationLink} href="/about">
-            About
-          </Link>
-
-          <Link className={styles.navigationLink} href="/chronicles">
-            Blog
-          </Link>
-        </nav>
-      </header>
-      {children}
+    <body className={styles.page}>
+      <Header />
+      <div className={styles.content}>{children}</div>
     </body>
   </html>
 )
