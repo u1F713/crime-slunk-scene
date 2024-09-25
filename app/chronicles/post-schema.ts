@@ -1,6 +1,8 @@
 import {Schema} from '@effect/schema'
 
-export const posts = Schema.Struct({
+export type Post = typeof Post.Type
+
+export const Post = Schema.Struct({
   title: Schema.String,
   description: Schema.String,
   image: Schema.String,

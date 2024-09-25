@@ -1,7 +1,7 @@
 import {Cloudinary} from '@cloudinary/url-gen/index'
 import Link from 'next/link'
 import type {FunctionComponent} from 'react'
-import type {posts} from '~/content/schemas.ts'
+import type {Post} from '~/chronicles/post-schema.ts'
 import * as styles from './EntryCard.css.ts'
 
 const cloud = new Cloudinary({
@@ -11,7 +11,7 @@ const cloud = new Cloudinary({
 const fmtDate = (date: Date | number) =>
   new Intl.DateTimeFormat('en-US', {dateStyle: 'full'}).format(date)
 
-const EntryCard: FunctionComponent<typeof posts.Type & {slug: string}> = ({
+const EntryCard: FunctionComponent<Post & {slug: string}> = ({
   image,
   slug,
   title,

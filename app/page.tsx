@@ -1,8 +1,8 @@
 import {Cloudinary} from '@cloudinary/url-gen/index'
-import {Chunk, Effect, Stream} from 'effect'
+import {Effect} from 'effect'
 import type {NextPage} from 'next'
 import Link from 'next/link'
-import {getCollection} from './content/utils.ts'
+import {getPosts} from './chronicles/utils.ts'
 import * as styles from './styles/app.css.ts'
 
 const cloud = new Cloudinary({
@@ -10,18 +10,10 @@ const cloud = new Cloudinary({
 })
 
 const Home: NextPage = async () => {
-  const collection = await getCollection('posts').pipe(
-    Stream.runCollect,
-    Effect.map(Chunk.toArray),
-    Effect.map(c =>
-      c.sort(
-        (x, y) =>
-          x.frontmatter.pubDate.getTime() - y.frontmatter.pubDate.getTime(),
-      ),
+  const posts = await Effect.runPromise(
+    Effect.map(getPosts, c =>
+      c.sort((x, y) => x.data.pubDate.getTime() - y.data.pubDate.getTime()),
     ),
-    Effect.map(c => c.slice(-4)),
-    Effect.map(c => c.reverse()),
-    Effect.runPromise,
   )
 
   return (
@@ -51,10 +43,10 @@ const Home: NextPage = async () => {
       <div>
         <h1>Latest posts</h1>
         <ul className={styles.latestPost}>
-          {collection.map(c => (
+          {posts.map(c => (
             <Link key={c.id} href={`/chronicles/${c.slug}`}>
-              <h2>{c.frontmatter.title}</h2>
-              <p>{c.frontmatter.description}</p>
+              <h2>{c.data.title}</h2>
+              <p>{c.data.description}</p>
             </Link>
           ))}
         </ul>

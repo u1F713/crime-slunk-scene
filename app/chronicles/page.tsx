@@ -1,28 +1,18 @@
-import {Chunk, Effect, Stream} from 'effect'
+import {Effect} from 'effect'
 import type {NextPage} from 'next'
-import {getCollection} from '~/content/utils.ts'
 import EntryCard from './components/Card/EntryCard.tsx'
 import Mansonry from './components/Masonry/Masonry.tsx'
+import {getPosts} from './utils.ts'
 
 const Chronicles: NextPage = async () => {
-  const collection = await Effect.runPromise(
-    Stream.runCollect(getCollection('posts')),
-  )
-
-  const list = Chunk.toReadonlyArray(collection).map(
-    ({id, slug, frontmatter}) => ({
-      id,
-      slug,
-      data: frontmatter,
-    }),
-  )
+  const posts = await Effect.runPromise(getPosts)
 
   return (
     <div>
       <h1>Chronicles</h1>
 
       <Mansonry>
-        {list.map(e => (
+        {posts.map(e => (
           <EntryCard key={e.id} slug={e.slug} {...e.data} />
         ))}
       </Mansonry>

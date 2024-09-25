@@ -1,34 +1,21 @@
-import {Chunk, Effect, Stream, pipe} from 'effect'
+import {Effect} from 'effect'
 import type {NextPage} from 'next'
-import {getCollection} from '~/content/utils'
+import {compileComponent} from '~/utils/content-collection.ts'
 import * as styles from '../chronicles.css.ts'
+import {getPost, getPosts} from '../utils.ts'
 
 export const generateStaticParams = () =>
-  Effect.runPromise(
-    pipe(
-      getCollection('posts'),
-      Stream.map(({slug}) => ({slug})),
-      Stream.runCollect,
-      Effect.map(Chunk.toArray),
-    ),
-  )
+  Effect.runPromise(getPosts).then(c => c.map(({slug}) => ({slug})))
 
 const Chronicle: NextPage<{params: {slug: string}}> = async ({params}) => {
-  const {render, frontmatter} = await Effect.runPromise(
-    pipe(
-      getCollection('posts'),
-      Stream.find(f => f.slug === params.slug),
-      Stream.runCollect,
-      Effect.flatMap(Chunk.get(0)),
-    ),
-  )
-  const Content = await render()
+  const post = await Effect.runPromise(getPost(params.slug))
+  const Content = await Effect.runPromise(compileComponent(post.content))
 
   return (
     <div className={styles.article}>
       <aside className={styles.postData}>
-        <h1>{frontmatter.title}</h1>
-        <p>{frontmatter.description}</p>
+        <h1>{post?.data.title}</h1>
+        <p>{post?.data.description}</p>
       </aside>
       <Content />
     </div>
