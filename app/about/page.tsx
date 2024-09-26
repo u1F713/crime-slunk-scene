@@ -4,7 +4,7 @@ import * as styles from './about.css.ts'
 const AboutPage: NextPage = () => {
   return (
     <main className={styles.aboutGrid}>
-      <section>
+      <section className={styles.aboutSection}>
         <h1 className={styles.aboutHeading}>Good for health, bad for...</h1>
 
         <p>
@@ -48,13 +48,42 @@ const AboutPage: NextPage = () => {
         <p>You may find me working with React, Next.js, Remix and Astro.</p>
       </section>
 
-      <section>
+      <section className={styles.aboutSection}>
         <h3 className={styles.aboutSubHeading}>What I'm up to</h3>
 
         <ul className={styles.list}>
-          <li>Learning Effect-TS.</li>
+          <li>
+            Learning
+            <a
+              className={styles.itemListLink}
+              href="https://effect.website/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {' Effect-TS.'}
+            </a>
+          </li>
           <li>Reading On Revolution by Hannah Arendt.</li>
-          <li>Playing Type Lumina; Neco-Arc and Kohaku.</li>
+          <li>
+            Playing Type Lumina;
+            <a
+              className={styles.itemListLink}
+              href="https://meltyblood.typelumina.com/resources/img/command/meltyblood_typelumina_neco-arc_command_lists_en.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {' Neco-Arc '}
+            </a>
+            and
+            <a
+              className={styles.itemListLink}
+              href="https://meltyblood.typelumina.com/resources/img/command/meltyblood_typelumina_kohaku_command_lists_en.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {' Kohaku.'}
+            </a>
+          </li>
         </ul>
       </section>
     </main>

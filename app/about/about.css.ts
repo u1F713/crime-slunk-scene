@@ -10,12 +10,18 @@ export const aboutContainer = style({
 export const aboutGrid = style({
   display: 'grid',
   gap: '2em',
+  width: 'fit-content',
+  margin: 'auto',
 
   '@container': {
     [`${AboutContainerName} (min-width: 55em)`]: {
       gridTemplateColumns: 'auto auto',
     },
   },
+})
+
+export const aboutSection = style({
+  maxWidth: '42em',
 })
 
 export const aboutHeading = style({
@@ -34,4 +40,13 @@ export const list = style({
   listStyle: 'hiragana',
   paddingLeft: '2.2rem',
   gap: '.5em',
+})
+
+export const itemListLink = style({
+  color: '#d2a8ff',
+  fontWeight: 'bold',
+
+  ':hover': {
+    color: '#828fff',
+  },
 })
