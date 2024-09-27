@@ -42,3 +42,10 @@ export const latestPost = style({
     },
   },
 })
+
+export const footer = style({
+  maxWidth: pageMaxWidth,
+  margin: '2em auto 1em auto',
+  padding: '2em 1em',
+  opacity: 0.5,
+})
