@@ -1,11 +1,14 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import {Schema} from '@effect/schema'
-import {type EvaluateOptions, compile, run} from '@mdx-js/mdx'
+import {type Fragment, type Jsx, compile, run} from '@mdx-js/mdx'
+import rehypeShiki, {type RehypeShikiOptions} from '@shikijs/rehype'
 import {Effect, Stream, pipe} from 'effect'
-import * as runtime from 'react/jsx-runtime'
+import * as runtime_ from 'react/jsx-runtime'
 import yaml from 'yaml'
 
+// @ts-expect-error: the automatic react runtime is untyped.
+const runtime: {Fragment: Fragment; jsx: Jsx; jsxs: Jsx} = runtime_
 const _frontmatterRegex = /---(.*?)---/s
 
 const parseFrontmatter = <A, I>(
@@ -48,9 +51,16 @@ export const getCollection = <A, I>(
 
 export const compileComponent = (content: string) =>
   pipe(
-    Effect.promise(() => compile(content, {outputFormat: 'function-body'})),
+    Effect.promise(() =>
+      compile(content, {
+        outputFormat: 'function-body',
+        rehypePlugins: [
+          [rehypeShiki, {theme: 'solarized-dark'} as RehypeShikiOptions],
+        ],
+      }),
+    ),
     Effect.tryMapPromise({
-      try: compiled => run(compiled, runtime as EvaluateOptions),
+      try: compiled => run(compiled, {...runtime}),
       catch: e => e,
     }),
     Effect.map(({default: Content}) => Content),

@@ -39,3 +39,18 @@ img {
   height: auto;
   max-width: 100%;
 }
+
+pre {
+  padding: 1em 0px;
+  overflow-x: auto;
+  font-size: 1rem;
+  outline: none;
+  margin-bottom: 1em;
+
+  code {
+    display: block;
+    padding: 0px 1.1em;
+    width: fit-content;
+    min-width: 100%;
+  }
+}
