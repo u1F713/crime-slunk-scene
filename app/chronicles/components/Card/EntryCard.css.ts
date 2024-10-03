@@ -1,25 +1,27 @@
 import {style} from '@vanilla-extract/css'
+import {colorschemeContract} from '~/styles/themes/_colorscheme.css'
 
 export const entityCard = style({
-  padding: '1em',
-  borderRadius: '3px',
-  outline: '1px solid oklch(0.8 0 0 / 0.83)',
+  borderRadius: '15px 10px 0px 10px',
   height: '100%',
-})
-
-export const cardTitle = style({
-  fontSize: '1.24em',
-  marginBottom: '.4em',
-  ':hover': {
-    textDecoration: 'underline',
-  },
+  overflow: 'hidden',
+  padding: '1em',
+  background: `oklch(from ${colorschemeContract.accent} 20% c h / 50.5%)`,
+  transition: 'transform .2s cubic-bezier(0,0,.2,1)',
+  boxShadow: `0 0px 2px 1px ${colorschemeContract.accent}`,
 })
 
 export const coverImage = style({
   display: 'block',
-  height: 'auto',
-  maxWidth: '100%',
+  width: '100%',
   margin: 'auto',
+  borderRadius: '10px',
+})
+
+export const cardTitle = style({
+  fontSize: '1.4rem',
+  lineHeight: '.9',
+  marginBottom: '.4em',
 })
 
 export const date = style({color: '#BCBCBC'})

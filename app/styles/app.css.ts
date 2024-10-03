@@ -1,9 +1,16 @@
-import {createVar, style} from '@vanilla-extract/css'
+import {createVar, globalStyle, style} from '@vanilla-extract/css'
+import {colorschemeContract} from './themes/_colorscheme.css'
 
 export const pageMaxWidth = createVar()
 
+globalStyle('::selection', {
+  color: `oklch(from ${colorschemeContract.accent} 1 9.54% h)`,
+  backgroundColor: `oklch(from ${colorschemeContract.accent} l c h / 0.5)`,
+})
+
 export const page = style({
-  background: '#01010181',
+  background: `oklch(from ${colorschemeContract.accent} 11.49% c h)`,
+  color: `oklch(from ${colorschemeContract.accent} 100% 9.54% h)`,
   vars: {
     [pageMaxWidth]: '70em',
   },
@@ -44,8 +51,8 @@ export const latestPost = style({
 })
 
 export const footer = style({
-  maxWidth: pageMaxWidth,
-  margin: '2em auto 1em auto',
+  color: `oklch(from ${colorschemeContract.accent} 0.5 c h)`,
   padding: '2em 1em',
-  opacity: 0.5,
+  margin: '2em auto 1em auto',
+  maxWidth: pageMaxWidth,
 })

@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 import type {FunctionComponent} from 'react'
 import Header from './components/header/header.tsx'
 import * as styles from './styles/app.css.ts'
+import {greenTheme} from './styles/themes/_colorscheme.css.ts'
 import './styles/global.css'
 
 const jetBrainsMono = localFont({
@@ -21,7 +22,7 @@ const RootLayout: FunctionComponent<{children: React.ReactNode}> = ({
   children,
 }) => (
   <html lang="en" className={jetBrainsMono.className}>
-    <body className={styles.page}>
+    <body className={`${styles.page} ${greenTheme}`}>
       <Header />
       <div className={styles.content}>{children}</div>
       <footer className={styles.footer}>

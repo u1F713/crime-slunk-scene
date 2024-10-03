@@ -1,4 +1,5 @@
 import {createContainer, style} from '@vanilla-extract/css'
+import {colorschemeContract} from '~/styles/themes/_colorscheme.css'
 
 const AboutContainerName = createContainer()
 
@@ -43,10 +44,10 @@ export const list = style({
 })
 
 export const itemListLink = style({
-  color: '#d2a8ff',
+  color: colorschemeContract.accent,
   fontWeight: 'bold',
 
   ':hover': {
-    color: '#828fff',
+    color: `oklch(from ${colorschemeContract.accent} 98.49 c h)`,
   },
 })

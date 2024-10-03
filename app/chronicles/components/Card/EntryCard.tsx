@@ -14,18 +14,15 @@ const EntryCard: FunctionComponent<Post & {slug: string}> = ({
   pubDate,
 }) => {
   return (
-    <article className={styles.entityCard}>
-      <img className={styles.coverImage} src={image} alt="" />
-
-      <section>
-        <h3 className={styles.cardTitle}>
-          <Link href={`/chronicles/${slug}`}>{title}</Link>
-        </h3>
+    <Link href={`/chronicles/${slug}`}>
+      <article className={styles.entityCard}>
+        <img className={styles.coverImage} src={image} alt="" />
+        <br />
+        <h3 className={styles.cardTitle}>{title}</h3>
         <p>{description}</p>
-
         <span className={styles.date}>{fmtDate(pubDate)}</span>
-      </section>
-    </article>
+      </article>
+    </Link>
   )
 }
 
