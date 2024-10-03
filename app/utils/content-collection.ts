@@ -5,6 +5,7 @@ import {type Fragment, type Jsx, compile, run} from '@mdx-js/mdx'
 import rehypeShiki, {type RehypeShikiOptions} from '@shikijs/rehype'
 import {Effect, Stream, pipe} from 'effect'
 import * as runtime_ from 'react/jsx-runtime'
+import remarkUnwrapImages from 'remark-unwrap-images'
 import yaml from 'yaml'
 
 // @ts-expect-error: the automatic react runtime is untyped.
@@ -54,6 +55,7 @@ export const compileComponent = (content: string) =>
     Effect.promise(() =>
       compile(content, {
         outputFormat: 'function-body',
+        remarkPlugins: [remarkUnwrapImages],
         rehypePlugins: [
           [rehypeShiki, {theme: 'solarized-dark'} as RehypeShikiOptions],
         ],

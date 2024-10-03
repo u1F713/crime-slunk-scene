@@ -34,6 +34,7 @@
     "@vitejs/plugin-react-swc": "^3.7.0",
     "happy-dom": "^15.7.3",
     "lefthook": "^1.7.15",
+    "remark-unwrap-images": "^4.0.0",
     "shiki": "^1.21.0",
     "typescript": "^5.5.4",
     "vite-tsconfig-paths": "^5.0.1",
