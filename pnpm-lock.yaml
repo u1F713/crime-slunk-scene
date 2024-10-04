@@ -48,6 +48,9 @@ importers:
       '@testing-library/react':
         specifier: ^16.0.1
         version: 16.0.1(@testing-library/dom@10.4.0)(react-dom@19.0.0-rc-4c58fce7-20240904(react@19.0.0-rc-4c58fce7-20240904))(react@19.0.0-rc-4c58fce7-20240904)(types-react-dom@19.0.0-rc.1)(types-react@19.0.0-rc.1)
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/node':
         specifier: ^22.5.4
         version: 22.5.4
@@ -84,6 +87,9 @@ importers:
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
+      unist-util-visit:
+        specifier: ^5.0.0
+        version: 5.0.0
       vite-tsconfig-paths:
         specifier: ^5.0.1
         version: 5.0.1(typescript@5.5.4)(vite@5.4.6(@types/node@22.5.4)(terser@5.33.0))

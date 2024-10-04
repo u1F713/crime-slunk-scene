@@ -7,6 +7,7 @@ import {Effect, Stream, pipe} from 'effect'
 import * as runtime_ from 'react/jsx-runtime'
 import remarkUnwrapImages from 'remark-unwrap-images'
 import yaml from 'yaml'
+import {remarkCreateCloudinaryURL} from './cloudinary'
 
 // @ts-expect-error: the automatic react runtime is untyped.
 const runtime: {Fragment: Fragment; jsx: Jsx; jsxs: Jsx} = runtime_
@@ -55,7 +56,7 @@ export const compileComponent = (content: string) =>
     Effect.promise(() =>
       compile(content, {
         outputFormat: 'function-body',
-        remarkPlugins: [remarkUnwrapImages],
+        remarkPlugins: [remarkUnwrapImages, remarkCreateCloudinaryURL],
         rehypePlugins: [
           [rehypeShiki, {theme: 'solarized-dark'} as RehypeShikiOptions],
         ],
