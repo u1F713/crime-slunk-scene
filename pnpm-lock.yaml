@@ -8,18 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@cloudinary/url-gen':
-        specifier: ^1.21.0
-        version: 1.21.0
-      '@effect/schema':
-        specifier: ^0.72.2
-        version: 0.72.2(effect@3.7.2)
-      '@mdx-js/mdx':
-        specifier: ^3.0.1
-        version: 3.0.1
-      effect:
-        specifier: ^3.7.2
-        version: 3.7.2
       next:
         specifier: 15.0.0-canary.143
         version: 15.0.0-canary.143(@babel/core@7.25.2)(@playwright/test@1.46.0)(react-dom@19.0.0-rc-4c58fce7-20240904(react@19.0.0-rc-4c58fce7-20240904))(react@19.0.0-rc-4c58fce7-20240904)
@@ -29,10 +17,16 @@ importers:
       react-dom:
         specifier: 19.0.0-rc-4c58fce7-20240904
         version: 19.0.0-rc-4c58fce7-20240904(react@19.0.0-rc-4c58fce7-20240904)
-      yaml:
-        specifier: ^2.5.1
-        version: 2.5.1
     devDependencies:
+      '@cloudinary/url-gen':
+        specifier: ^1.21.0
+        version: 1.21.0
+      '@effect/schema':
+        specifier: ^0.72.2
+        version: 0.72.2(effect@3.8.4)
+      '@mdx-js/mdx':
+        specifier: ^3.0.1
+        version: 3.0.1
       '@next/bundle-analyzer':
         specifier: ^14.2.8
         version: 14.2.8
@@ -72,6 +66,9 @@ importers:
       '@vitejs/plugin-react-swc':
         specifier: ^3.7.0
         version: 3.7.0(@swc/helpers@0.5.13)(vite@5.4.6(@types/node@22.5.4)(terser@5.33.0))
+      effect:
+        specifier: ^3.8.4
+        version: 3.8.4
       happy-dom:
         specifier: ^15.7.3
         version: 15.7.3
@@ -96,6 +93,9 @@ importers:
       vitest:
         specifier: ^2.1.1
         version: 2.1.1(@types/node@22.5.4)(happy-dom@15.7.3)(terser@5.33.0)
+      yaml:
+        specifier: ^2.5.1
+        version: 2.5.1
 
 packages:
 
@@ -1277,8 +1277,8 @@ packages:
   duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
 
-  effect@3.7.2:
-    resolution: {integrity: sha512-pV7l1+LSZFvVObj4zuy4nYiBaC7qZOfrKV6s/Ef4p3KueiQwZFgamazklwyZ+x7Nyj2etRDFvHE/xkThTfQD1w==}
+  effect@3.8.4:
+    resolution: {integrity: sha512-rOZ1XAi+Fb+fAHoUJ5FnJPSPZEBxVbCl5QWtOWFTgOeFHx0QpbK3pezWvq9OIxQPdwvSkPOw926qrs4xdD9dLA==}
 
   electron-to-chromium@1.5.16:
     resolution: {integrity: sha512-2gQpi2WYobXmz2q23FrOBYTLcI1O/P4heW3eqX+ldmPVDQELRqhiebV380EhlGG12NtnX1qbK/FHpN0ba+7bLA==}
@@ -2378,9 +2378,9 @@ snapshots:
 
   '@discoveryjs/json-ext@0.5.7': {}
 
-  '@effect/schema@0.72.2(effect@3.7.2)':
+  '@effect/schema@0.72.2(effect@3.8.4)':
     dependencies:
-      effect: 3.7.2
+      effect: 3.8.4
       fast-check: 3.22.0
 
   '@emnapi/runtime@1.2.0':
@@ -3326,7 +3326,7 @@ snapshots:
 
   duplexer@0.1.2: {}
 
-  effect@3.7.2: {}
+  effect@3.8.4: {}
 
   electron-to-chromium@1.5.16: {}
 
