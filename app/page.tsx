@@ -1,15 +1,12 @@
-import {Cloudinary} from '@cloudinary/url-gen/index'
 import {Effect} from 'effect'
 import type {NextPage} from 'next'
 import Link from 'next/link'
+import {makeCloudinary} from '~/utils/cloudinary.ts'
 import {getPosts} from './chronicles/utils.ts'
 import * as styles from './styles/app.css.ts'
 
-const cloud = new Cloudinary({
-  cloud: {cloudName: process.env.PUBLIC_CLOUDINARY_CLOUD_NAME ?? ''},
-})
-
 const Home: NextPage = async () => {
+  const cloud = Effect.runSync(makeCloudinary)
   const posts = await Effect.runPromise(
     Effect.map(getPosts, c =>
       c.sort((x, y) => x.data.pubDate.getTime() - y.data.pubDate.getTime()),

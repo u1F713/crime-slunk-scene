@@ -1,16 +1,13 @@
-import {Cloudinary} from '@cloudinary/url-gen/index'
 import {Effect} from 'effect'
 import type {NextPage} from 'next'
+import {makeCloudinary} from '~/utils/cloudinary.ts'
 import EntryCard from './components/Card/EntryCard.tsx'
 import Mansonry from './components/Masonry/Masonry.tsx'
 import {getPosts} from './utils.ts'
 
 const Chronicles: NextPage = async () => {
   const posts = await Effect.runPromise(getPosts)
-
-  const cloud = new Cloudinary({
-    cloud: {cloudName: process.env.PUBLIC_CLOUDINARY_CLOUD_NAME ?? ''},
-  })
+  const cloud = Effect.runSync(makeCloudinary)
 
   return (
     <div>
