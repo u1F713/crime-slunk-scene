@@ -1,10 +1,14 @@
 'use client'
 
 import {type FunctionComponent, useEffect, useRef} from 'react'
-import * as styles from './modal.css.ts'
-import {useViewer} from './viewer-context.ts'
+import {useViewer} from '../viewer-context.ts'
+import * as styles from './viewer-modal.css.ts'
 
-const Modal: FunctionComponent<{isOpen?: boolean}> = () => {
+interface ModalProps {
+  children: React.ReactNode
+}
+
+const ViewerModal: FunctionComponent<ModalProps> = ({children}) => {
   const {image, setImage} = useViewer()
   const dialog = useRef<HTMLDialogElement>(null)
 
@@ -36,12 +40,7 @@ const Modal: FunctionComponent<{isOpen?: boolean}> = () => {
       onKeyDown={e => e.key === 'Escape' && setImage(undefined)}
       ref={dialog}
     >
-      <img
-        className={styles.dialogImage}
-        draggable="false"
-        src={image?.src}
-        alt={image?.alt}
-      />
+      {children}
 
       <ul className={styles.toolbar}>
         <li
@@ -63,4 +62,4 @@ const Modal: FunctionComponent<{isOpen?: boolean}> = () => {
   )
 }
 
-export default Modal
+export default ViewerModal

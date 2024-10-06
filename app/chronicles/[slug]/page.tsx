@@ -2,9 +2,9 @@ import {Effect} from 'effect'
 import type {NextPage} from 'next'
 import {compileComponent} from '~/utils/content-collection.ts'
 import * as styles from '../chronicles.css.ts'
-import ImageViewer from '../components/image.tsx'
-import Modal from '../components/viewer/modal.tsx'
-import ModalContextProvider from '../components/viewer/viewer-provider.tsx'
+import ImageViewer from '../components/image-viewer/image-viewer.tsx'
+import ModalContextProvider from '../components/image-viewer/viewer-provider.tsx'
+import Image from '../components/image.tsx'
 import {getPost, getPosts} from '../utils.ts'
 
 export const generateStaticParams = () =>
@@ -23,8 +23,8 @@ const Chronicle: NextPage<{params: {slug: string}}> = async ({params}) => {
 
       <ModalContextProvider>
         {/* @ts-expect-error: */}
-        <Content components={{img: ImageViewer}} />
-        <Modal />
+        <Content components={{img: Image}} />
+        <ImageViewer />
       </ModalContextProvider>
     </div>
   )
