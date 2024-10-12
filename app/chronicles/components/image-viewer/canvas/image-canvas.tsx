@@ -1,12 +1,6 @@
 'use client'
 
-import {
-  type FunctionComponent,
-  type MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import {viewerImage} from './image-canvas.css.ts'
 
 interface CanvasProps {
@@ -14,53 +8,76 @@ interface CanvasProps {
   alt: string
 }
 
-export const ViewerCanvas: FunctionComponent<CanvasProps> = ({src, alt}) => {
+function ViewerCanvas({src, alt}: CanvasProps) {
   const [isDragging, setIsDragging] = useState(false)
   const [position, setPosition] = useState({x: 0, y: 0})
-  const [offset, setOffset] = useState({x: 0, y: 0})
-  const elementRef = useRef<HTMLImageElement>(null)
+  const [margin, setMargin] = useState({left: 0, top: 0})
+  const containerRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLImageElement>(null)
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true)
-    setOffset({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y,
-    })
-  }
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      setPosition({y: e.clientY, x: e.clientX})
+      setIsDragging(true)
+    },
+    [],
+  )
 
-  const handleMouseMove: MouseEventHandler<HTMLImageElement> = e => {
-    if (isDragging)
-      setPosition({
-        x: e.clientX - offset.x,
-        y: e.clientY - offset.y,
-      })
-  }
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (isDragging) {
+        const x = position.x - e.clientX
+        const y = position.y - e.clientY
+
+        setMargin(prev => ({left: prev.left + -x, top: prev.top + -y}))
+        setPosition({x: e.clientX, y: e.clientY})
+      }
+    },
+    [isDragging, position],
+  )
+
+  const handleMouseUp = useCallback(() => setIsDragging(false), [])
 
   useEffect(() => {
-    const rect = elementRef.current?.getBoundingClientRect()
+    const rect = imageRef.current?.getBoundingClientRect()
     if (rect)
-      setPosition({
-        x: window.innerWidth / 2 - rect.width / 2,
-        y: window.innerHeight / 2 - rect.height / 2,
+      setMargin({
+        left: window.innerWidth / 2 - rect.width / 2,
+        top: window.innerHeight / 2 - rect.height / 2,
       })
   }, [])
 
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('mouseup', handleMouseUp)
+    } else {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp])
+
   return (
-    <figure>
+    <figure
+      onMouseDown={handleMouseDown}
+      ref={containerRef}
+      style={{height: '100%', overflow: 'clip', userSelect: 'none'}}
+    >
       <img
-        className={viewerImage}
-        draggable="false"
-        ref={elementRef}
         src={src}
         alt={alt}
-        onKeyDown={undefined}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={() => setIsDragging(false)}
+        ref={imageRef}
+        className={viewerImage}
+        draggable="false"
         style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          visibility: elementRef.current ? 'visible' : 'hidden',
+          marginLeft: margin.left,
+          marginTop: margin.top,
+          visibility: containerRef.current ? 'visible' : 'hidden',
         }}
       />
     </figure>

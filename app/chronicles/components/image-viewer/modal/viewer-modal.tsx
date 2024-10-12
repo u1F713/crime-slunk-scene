@@ -35,10 +35,9 @@ const ViewerModal: FunctionComponent<ModalProps> = ({children}) => {
   return (
     <dialog
       className={styles.modal}
-      draggable="false"
-      onClick={e => e.currentTarget === e.target && setImage(undefined)}
       onKeyDown={e => e.key === 'Escape' && setImage(undefined)}
       ref={dialog}
+      draggable="false"
     >
       {children}
 
