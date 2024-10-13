@@ -1,6 +1,6 @@
 import {style} from '@vanilla-extract/css'
 
 export const viewerImage = style({
-  position: 'absolute',
+  position: 'relative',
   userSelect: 'none',
 })

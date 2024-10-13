@@ -1,6 +1,13 @@
 'use client'
 
-import {useCallback, useEffect, useRef, useState} from 'react'
+import {
+  type RefObject,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from 'react'
 import {viewerImage} from './image-canvas.css.ts'
 
 interface CanvasProps {
@@ -8,12 +15,53 @@ interface CanvasProps {
   alt: string
 }
 
+interface ImagePositionState {
+  left: number
+  top: number
+  containerRef: RefObject<HTMLElement | null>
+  imageRef: RefObject<HTMLImageElement | null>
+}
+
+function dragImageReducer(
+  state: ImagePositionState,
+  action: {type: 'drag'; payload: {left: number; top: number}},
+): ImagePositionState {
+  const {
+    containerRef: {current: container},
+    imageRef: {current: element},
+  } = state
+
+  if (!element || !container) return state
+
+  switch (action.type === 'drag') {
+    case action.payload.left < -element.clientWidth / 2:
+      return {...state, left: -element.clientWidth / 2}
+
+    case action.payload.left > container.clientWidth - element.clientWidth / 2:
+      return {...state, left: container.clientWidth - element.clientWidth / 2}
+
+    case action.payload.top < -element.clientHeight / 2:
+      return {...state, top: -element.clientHeight / 2}
+
+    case action.payload.top >
+      container.clientHeight - element.clientHeight / 2:
+      return {...state, top: container.clientHeight - element.clientHeight / 2}
+  }
+
+  return {...state, ...action.payload}
+}
+
 function ViewerCanvas({src, alt}: CanvasProps) {
-  const [isDragging, setIsDragging] = useState(false)
-  const [position, setPosition] = useState({x: 0, y: 0})
-  const [margin, setMargin] = useState({left: 0, top: 0})
   const containerRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
+  const [isDragging, setIsDragging] = useState(false)
+  const [position, setPosition] = useState({x: 0, y: 0})
+  const [margin, dispatch] = useReducer(dragImageReducer, {
+    left: 0,
+    top: 0,
+    containerRef,
+    imageRef,
+  })
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -29,21 +77,28 @@ function ViewerCanvas({src, alt}: CanvasProps) {
         const x = position.x - e.clientX
         const y = position.y - e.clientY
 
-        setMargin(prev => ({left: prev.left + -x, top: prev.top + -y}))
+        dispatch({
+          type: 'drag',
+          payload: {...margin, left: margin.left + -x, top: margin.top + -y},
+        })
         setPosition({x: e.clientX, y: e.clientY})
       }
     },
-    [isDragging, position],
+    [isDragging, position, margin],
   )
 
   const handleMouseUp = useCallback(() => setIsDragging(false), [])
 
   useEffect(() => {
     const rect = imageRef.current?.getBoundingClientRect()
-    if (rect)
-      setMargin({
-        left: window.innerWidth / 2 - rect.width / 2,
-        top: window.innerHeight / 2 - rect.height / 2,
+
+    if (rect && containerRef.current)
+      dispatch({
+        type: 'drag',
+        payload: {
+          left: containerRef.current.clientWidth / 2 - rect.width / 2,
+          top: containerRef.current.clientHeight / 2 - rect.height / 2,
+        },
       })
   }, [])
 
@@ -66,7 +121,11 @@ function ViewerCanvas({src, alt}: CanvasProps) {
     <figure
       onMouseDown={handleMouseDown}
       ref={containerRef}
-      style={{height: '100%', overflow: 'clip', userSelect: 'none'}}
+      style={{
+        height: '100%',
+        userSelect: 'none',
+        overflow: 'hidden',
+      }}
     >
       <img
         src={src}
@@ -78,6 +137,7 @@ function ViewerCanvas({src, alt}: CanvasProps) {
           marginLeft: margin.left,
           marginTop: margin.top,
           visibility: containerRef.current ? 'visible' : 'hidden',
+          zIndex: '-1',
         }}
       />
     </figure>

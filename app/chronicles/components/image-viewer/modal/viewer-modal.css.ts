@@ -11,6 +11,7 @@ export const modal = style({
   containerType: 'inline-size',
   background: `oklch(from ${colorschemeContract.accent} 0.15 c h / 0.5)`,
   backdropFilter: 'blur(20px)',
+  overflow: 'hidden',
 })
 
 export const dialogImage = style({
