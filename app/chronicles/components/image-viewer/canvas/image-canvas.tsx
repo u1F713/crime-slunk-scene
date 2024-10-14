@@ -1,5 +1,6 @@
 'use client'
 
+import {Match} from 'effect'
 import {
   type RefObject,
   useCallback,
@@ -26,29 +27,30 @@ function dragImageReducer(
   state: ImagePositionState,
   action: {type: 'drag'; payload: {left: number; top: number}},
 ): ImagePositionState {
-  const {
-    containerRef: {current: container},
-    imageRef: {current: element},
-  } = state
+  if (!state.containerRef.current || !state.imageRef.current) return state
 
-  if (!element || !container) return state
+  const container = state.containerRef.current
+  const element = state.imageRef.current
+  const {left, top} = action.payload
 
-  switch (action.type === 'drag') {
-    case action.payload.left < -element.clientWidth / 2:
-      return {...state, left: -element.clientWidth / 2}
+  const match = (position: number, element: number, edge: number) =>
+    Match.value({position, element, edge}).pipe(
+      Match.when(
+        {position: position => position < -element / 2},
+        () => -element / 2,
+      ),
+      Match.when(
+        {position: position => position > edge - element / 2},
+        () => edge - element / 2,
+      ),
+      Match.orElse(() => position),
+    )
 
-    case action.payload.left > container.clientWidth - element.clientWidth / 2:
-      return {...state, left: container.clientWidth - element.clientWidth / 2}
-
-    case action.payload.top < -element.clientHeight / 2:
-      return {...state, top: -element.clientHeight / 2}
-
-    case action.payload.top >
-      container.clientHeight - element.clientHeight / 2:
-      return {...state, top: container.clientHeight - element.clientHeight / 2}
+  return {
+    ...state,
+    left: match(left, element.clientWidth, container.clientWidth),
+    top: match(top, element.clientHeight, container.clientHeight),
   }
-
-  return {...state, ...action.payload}
 }
 
 function ViewerCanvas({src, alt}: CanvasProps) {
