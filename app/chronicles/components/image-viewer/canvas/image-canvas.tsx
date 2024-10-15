@@ -9,12 +9,8 @@ import {
   useRef,
   useState,
 } from 'react'
+import {useViewer} from '../viewer-context.tsx'
 import {viewerImage} from './image-canvas.css.ts'
-
-interface CanvasProps {
-  src: string
-  alt: string
-}
 
 interface ImagePositionState {
   left: number
@@ -53,7 +49,7 @@ function dragImageReducer(
   }
 }
 
-function ViewerCanvas({src, alt}: CanvasProps) {
+function ViewerCanvas() {
   const containerRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLImageElement>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -64,6 +60,8 @@ function ViewerCanvas({src, alt}: CanvasProps) {
     containerRef,
     imageRef,
   })
+
+  const {image} = useViewer()
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -130,8 +128,8 @@ function ViewerCanvas({src, alt}: CanvasProps) {
       }}
     >
       <img
-        src={src}
-        alt={alt}
+        src={image?.src}
+        alt={image?.alt}
         ref={imageRef}
         className={viewerImage}
         draggable="false"

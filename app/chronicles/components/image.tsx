@@ -1,7 +1,7 @@
 'use client'
 
 import type {ComponentProps, FunctionComponent} from 'react'
-import {useViewer} from './image-viewer/viewer-context'
+import {useViewerDispatch} from './image-viewer/viewer-context.tsx'
 
 interface ImgProps extends ComponentProps<'img'> {
   readonly src: string
@@ -9,16 +9,14 @@ interface ImgProps extends ComponentProps<'img'> {
 }
 
 const Image: FunctionComponent<ImgProps> = ({src, alt}) => {
-  const {setImage} = useViewer()
+  const viewerDispatch = useViewerDispatch()
+
+  const setImage = () =>
+    viewerDispatch({type: 'update_image', payload: {image: {src, alt}}})
 
   return (
     <figure>
-      <img
-        src={src}
-        alt={alt}
-        onClick={() => setImage({src, alt})}
-        onKeyDown={() => setImage(undefined)}
-      />
+      <img src={src} alt={alt} onKeyDown={setImage} onClick={setImage} />
     </figure>
   )
 }

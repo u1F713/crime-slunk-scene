@@ -1,7 +1,7 @@
 'use client'
 
 import {type FunctionComponent, useEffect, useRef} from 'react'
-import {useViewer} from '../viewer-context.ts'
+import {useViewer, useViewerDispatch} from '../viewer-context.tsx'
 import * as styles from './viewer-modal.css.ts'
 
 interface ModalProps {
@@ -9,7 +9,8 @@ interface ModalProps {
 }
 
 const ViewerModal: FunctionComponent<ModalProps> = ({children}) => {
-  const {image, setImage} = useViewer()
+  const {image} = useViewer()
+  const viewerDispatch = useViewerDispatch()
   const dialog = useRef<HTMLDialogElement>(null)
 
   const downloadImage = async (imgSrc: string, filename: string) => {
@@ -35,16 +36,21 @@ const ViewerModal: FunctionComponent<ModalProps> = ({children}) => {
   return (
     <dialog
       className={styles.modal}
-      onKeyDown={e => e.key === 'Escape' && setImage(undefined)}
+      onKeyDown={e =>
+        e.key === 'Escape' &&
+        viewerDispatch({type: 'update_image', payload: {image: undefined}})
+      }
       ref={dialog}
       draggable="false"
     >
-      {children}
+      {image && children}
 
       <ul className={styles.toolbar}>
         <li
           onKeyDown={undefined}
-          onClick={() => image && downloadImage(image.src, image.alt)}
+          onClick={() =>
+            image?.src && image?.alt && downloadImage(image.src, image.alt)
+          }
         >
           <svg height="1em" width="1em" strokeLinejoin="round">
             <title>donwload</title>

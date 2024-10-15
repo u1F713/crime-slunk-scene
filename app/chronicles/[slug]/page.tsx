@@ -2,8 +2,9 @@ import {Effect} from 'effect'
 import type {NextPage} from 'next'
 import {compileComponent} from '~/utils/content-collection.ts'
 import * as styles from '../chronicles.css.ts'
-import ImageViewer from '../components/image-viewer/image-viewer.tsx'
-import ModalContextProvider from '../components/image-viewer/viewer-provider.tsx'
+import ViewerCanvas from '../components/image-viewer/canvas/image-canvas.tsx'
+import ViewerModal from '../components/image-viewer/modal/viewer-modal.tsx'
+import {ViewerProvider} from '../components/image-viewer/viewer-context.tsx'
 import Image from '../components/image.tsx'
 import {getPost, getPosts} from '../utils.ts'
 
@@ -21,11 +22,13 @@ const Chronicle: NextPage<{params: {slug: string}}> = async ({params}) => {
         <p>{post?.data.description}</p>
       </aside>
 
-      <ModalContextProvider>
+      <ViewerProvider>
         {/* @ts-expect-error: */}
         <Content components={{img: Image}} />
-        <ImageViewer />
-      </ModalContextProvider>
+        <ViewerModal>
+          <ViewerCanvas />
+        </ViewerModal>
+      </ViewerProvider>
     </div>
   )
 }
