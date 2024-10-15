@@ -30,6 +30,6 @@
         };
       }
     );
-    formatter = forEachSupportedSystem ({pkgs}: pkgs.alejandra);
+    formatter = forEachSupportedSystem ({pkgs}: pkgs.nixfmt-rfc-style);
   };
 }
