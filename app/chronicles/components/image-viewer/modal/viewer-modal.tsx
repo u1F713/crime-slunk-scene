@@ -8,20 +8,27 @@ interface ModalProps {
   children: React.ReactNode
 }
 
+async function downloadBlob(src: string, filename?: string) {
+  const res = await fetch(src)
+
+  if (res.ok) {
+    const blob = await res.blob()
+    const href = URL.createObjectURL(blob)
+    const download = globalThis.document.createElement('a')
+
+    download.setAttribute('href', href)
+    download.setAttribute('download', filename ? filename : 'image')
+    download.click()
+    URL.revokeObjectURL(href)
+  }
+}
+
 const ViewerModal: FunctionComponent<ModalProps> = ({children}) => {
   const {image} = useViewer()
   const viewerDispatch = useViewerDispatch()
   const dialog = useRef<HTMLDialogElement>(null)
 
-  const downloadImage = async (imgSrc: string, filename: string) => {
-    const blob = await fetch(imgSrc).then(res => res.blob())
-    const href = URL.createObjectURL(blob)
-    const anchorElement = globalThis.document.createElement('a')
-    anchorElement.setAttribute('href', href)
-    anchorElement.setAttribute('download', filename)
-    anchorElement.click()
-    URL.revokeObjectURL(href)
-  }
+  const downloadImage = () => image?.src && downloadBlob(image.src, image.alt)
 
   useEffect(() => {
     if (image !== undefined) {
@@ -44,14 +51,8 @@ const ViewerModal: FunctionComponent<ModalProps> = ({children}) => {
       draggable="false"
     >
       {image && children}
-
       <ul className={styles.toolbar}>
-        <li
-          onKeyDown={undefined}
-          onClick={() =>
-            image?.src && image?.alt && downloadImage(image.src, image.alt)
-          }
-        >
+        <li onKeyDown={undefined} onClick={downloadImage}>
           <svg height="1em" width="1em" strokeLinejoin="round">
             <title>donwload</title>
             <path
