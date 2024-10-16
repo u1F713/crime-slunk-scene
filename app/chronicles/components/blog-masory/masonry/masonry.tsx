@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import * as styles from './Mansonry.css.ts'
+import * as styles from './mansonry.css.ts'
 
 const Masonry: FunctionComponent<{children: JSX.Element[]}> = ({children}) => {
   const [columns, setColumns] = useState<JSX.Element[][]>([])

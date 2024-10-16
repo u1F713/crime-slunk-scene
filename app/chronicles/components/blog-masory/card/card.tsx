@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type {FunctionComponent} from 'react'
 import type {Post} from '~/chronicles/post-schema.ts'
-import * as styles from './EntryCard.css.ts'
+import * as styles from './card.css.ts'
 
 const fmtDate = (date: Date | number) =>
   new Intl.DateTimeFormat('en-US', {dateStyle: 'full'}).format(date)

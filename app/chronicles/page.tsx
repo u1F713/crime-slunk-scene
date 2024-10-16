@@ -1,8 +1,8 @@
 import {Effect} from 'effect'
 import type {NextPage} from 'next'
 import {makeCloudinary} from '~/utils/cloudinary.ts'
-import EntryCard from './components/Card/EntryCard.tsx'
-import Mansonry from './components/Masonry/Masonry.tsx'
+import EntryCard from './components/blog-masory/card/card.tsx'
+import Mansonry from './components/blog-masory/masonry/masonry.tsx'
 import {getPosts} from './utils.ts'
 
 const Chronicles: NextPage = async () => {
