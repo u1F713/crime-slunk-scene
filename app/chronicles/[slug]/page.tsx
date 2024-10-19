@@ -1,5 +1,4 @@
 import {Effect} from 'effect'
-import type {NextPage} from 'next'
 import {compileComponent} from '~/utils/content-collection.ts'
 import * as styles from '../chronicles.css.ts'
 import ViewerCanvas from '../components/image-viewer/canvas/image-canvas.tsx'
@@ -8,11 +7,16 @@ import {ViewerProvider} from '../components/image-viewer/viewer-context.tsx'
 import Image from '../components/image.tsx'
 import {getPost, getPosts} from '../utils.ts'
 
-export const generateStaticParams = () =>
+interface ChronicleParams {
+  slug: string
+}
+
+export const generateStaticParams = (): Promise<ChronicleParams[]> =>
   Effect.runPromise(getPosts).then(c => c.map(({slug}) => ({slug})))
 
-const Chronicle: NextPage<{params: {slug: string}}> = async ({params}) => {
-  const post = await Effect.runPromise(getPost(params.slug))
+async function Chronicle({params}: {params: Promise<ChronicleParams>}) {
+  const {slug} = await params
+  const post = await Effect.runPromise(getPost(slug))
   const Content = await Effect.runPromise(compileComponent(post.content))
 
   return (
