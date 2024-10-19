@@ -44,8 +44,6 @@ const AboutPage: NextPage = () => {
           ropes, I'm eager to share my experiences as a web developer using
           open-source technologies.
         </p>
-
-        <p>You may find me working with React, Next.js, Remix and Astro.</p>
       </section>
 
       <section className={styles.aboutSection}>
