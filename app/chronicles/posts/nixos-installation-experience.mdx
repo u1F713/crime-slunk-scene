@@ -5,6 +5,9 @@ image: 'posts/nixos-installation-experience/cover'
 pubDate: 2024-06-19
 ---
 
+
+![NixOS_minimal_tty](chronicles/nixos-install/NixOS_minimal_tty)
+
 Installing NixOS is surprisingly effortless. Both the Graphical  
 and Minimal ISOs offer a smooth onboarding process.  
 
@@ -22,16 +25,17 @@ seem straightforward—especially since most users are familiar with
 NetworkManager many "advanced" distro installations often rely on using 
 `wpa_supplicant` for wireless networks.
 
-**Note**: Before you begin, you may want to adjust the console font.
-Unlike other Linux distributions, NixOS does not expose the 
-/usr/share/fonts/ directory.
+Before you begin, you may want to adjust the console font.
 
 ```sh
 # ter-112n, sun12x22 or use the -d flag to doble the size
 setfont ter-116b
 ```
 
-### Using wpa_passphrase
+**Note**: Unlike other Linux distributions, NixOS does not expose the 
+/usr/share/fonts/ directory.
+
+## Using wpa_passphrase
 
 There are many ways to configure a network, but using wpa_supplicant is 
 one of the simplest methods.
@@ -63,7 +67,7 @@ network={
 systemctl restart wpa_supplicant.service
 ```
 
-### Using wpa_cli
+## Using wpa_cli
 
 This is the method recommended in the NixOS manual.
 
@@ -88,8 +92,6 @@ verify the results by running lsblk.
 
 For the root partition, you can use either ext4 or btrfs. One of the key 
 advantages of btrfs is its support for subvolumes and snapshots. 
-
-Subvolumes: nix, home, tmp, and boot. 
 
 ```sh
 mkfs.vfat -F32 -n BOOT /dev/nvme0n1p1
@@ -138,14 +140,14 @@ hardware-configuration.nix file.
   ...
 }:
 {
-  imports = [./hardware-configuration.nix]
+  imports = [ ./hardware-configuration.nix ];
 
   loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
   };
 
-  networking.hostName = 'nixos';
+  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/New_York";
@@ -154,7 +156,11 @@ hardware-configuration.nix file.
     description = "alice";
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = ["wheel" "audio" "networkmanager"];
+    extraGroups = [
+      "wheel"
+      "audio"
+      "networkmanager"
+    ];
   };
 
   services.openssh = {
@@ -176,7 +182,7 @@ hardware-configuration.nix file.
     mako # notification system developed by swaywm maintainer
   ];
 
-  # Enable the gnome-keyring secrets vault. 
+  # Enable the gnome-keyring secrets vault.
   # Will be exposed through DBus to programs willing to store secrets.
   services.gnome.gnome-keyring.enable = true;
 
@@ -198,23 +204,24 @@ To use Nix Flakes, you first need to enable the experimental feature.
 # configuration.nix
 {
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     use-xdg-base-directories = true;
   };
 }
 ```
 
-Note: Flakes are already enabled for `nixos-install` in the Live ISO.
-
-First, create a Git repository and add a flake.nix file at the root directory
-
 ```nix
+# flake.nix
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -222,15 +229,12 @@ First, create a Git repository and add a flake.nix file at the root directory
     {
       nixosConfigurations.apocrypha = nixpkgs.lib.nixosSystem {
         inherit system pkgs lib;
-        modules = [ ./hosts/</path-to/configuration.nix> ];
+        modules = [ ./configuration.nix ];
       };
     };
 }
 ```
 
-After the configuration is done run `nixos-install` in a shell to start the
-installation process.
+After the configuration is done run `sudo nixos-install --flake .#<hostname>`
+in a shell to start the installation process.
 
-```sh
-sudo nixos-install --flake .#hostname
-```
