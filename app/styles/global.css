@@ -40,6 +40,8 @@ img {
   max-width: 100%;
 }
 
+/* Markdown Content */
+
 pre {
   padding: 1em 0px;
   overflow-x: auto;
@@ -53,4 +55,11 @@ pre {
     width: fit-content;
     min-width: 100%;
   }
+}
+
+ol {
+  list-style: hiragana;
+  padding-left: 2.2rem;
+  margin-bottom: 1.2em;
+  line-height: 1.5;
 }
