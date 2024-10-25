@@ -4,8 +4,10 @@ import {Schema} from '@effect/schema'
 import {compile, run} from '@mdx-js/mdx'
 import rehypeShiki, {type RehypeShikiOptions} from '@shikijs/rehype'
 import {Effect, Stream, pipe} from 'effect'
+import type {Root} from 'hast'
 import * as runtime from 'react/jsx-runtime'
 import remarkUnwrapImages from 'remark-unwrap-images'
+import {visit} from 'unist-util-visit'
 import yaml from 'yaml'
 import {remarkCreateCloudinaryURL} from './cloudinary'
 
@@ -56,7 +58,35 @@ export const compileComponent = (content: string) =>
         outputFormat: 'function-body',
         remarkPlugins: [remarkUnwrapImages, remarkCreateCloudinaryURL],
         rehypePlugins: [
-          [rehypeShiki, {theme: 'solarized-dark'} as RehypeShikiOptions],
+          [
+            rehypeShiki,
+            {
+              theme: 'solarized-dark',
+              addLanguageClass: true,
+              tabindex: false,
+            } as RehypeShikiOptions,
+          ],
+
+          () => (tree: Root) => {
+            visit(tree, 'element', (node, _, parent) => {
+              if (
+                parent?.type === 'element' &&
+                parent.tagName === 'pre' &&
+                node.tagName === 'code' &&
+                Array.isArray(node.properties?.class) &&
+                typeof node.properties.class[0] === 'string'
+              ) {
+                const lang = node.properties.class[0]
+
+                parent.properties = {
+                  ...parent.properties,
+                  'data-language': lang.match(/language-(.*)/)?.[1],
+                }
+
+                node.properties.class = null
+              }
+            })
+          },
         ],
       }),
     ),
