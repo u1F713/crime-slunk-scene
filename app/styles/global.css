@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 :root {
@@ -43,17 +44,13 @@ img {
 /* Markdown Content */
 
 pre {
-  padding: 1em 0px;
-  overflow-x: auto;
-  font-size: 1rem;
-  outline: none;
+  padding: 1em;
   margin-bottom: 1em;
+  overflow-x: auto;
+  outline: none;
 
   code {
     display: block;
-    padding: 0px 1.1em;
-    width: fit-content;
-    min-width: 100%;
   }
 }
 
