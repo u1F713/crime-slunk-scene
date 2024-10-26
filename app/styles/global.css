@@ -43,17 +43,6 @@ img {
 
 /* Markdown Content */
 
-pre {
-  padding: 1em;
-  margin-bottom: 1em;
-  overflow-x: auto;
-  outline: none;
-
-  code {
-    display: block;
-  }
-}
-
 ol {
   list-style: hiragana;
   padding-left: 2.2rem;

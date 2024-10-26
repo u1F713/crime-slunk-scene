@@ -64,6 +64,15 @@ export const compileComponent = (content: string) =>
               theme: 'solarized-dark',
               addLanguageClass: true,
               tabindex: false,
+              parseMetaString: metaString =>
+                metaString
+                  .split(' ')
+                  .reduce((acc: Record<string, string>, meta) => {
+                    const [key, value] = meta.split('=')
+                    acc[`data-${key}`] = value
+                    return acc
+                  }, {}),
+              transformers: [],
             } as RehypeShikiOptions,
           ],
 

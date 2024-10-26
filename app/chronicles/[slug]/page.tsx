@@ -1,6 +1,7 @@
 import {Effect} from 'effect'
 import {compileComponent} from '~/utils/content-collection.ts'
 import * as styles from '../chronicles.css.ts'
+import CodeBlock from '../components/code-block/code-block.tsx'
 import ViewerCanvas from '../components/image-viewer/canvas/image-canvas.tsx'
 import ViewerModal from '../components/image-viewer/modal/viewer-modal.tsx'
 import {ViewerProvider} from '../components/image-viewer/viewer-context.tsx'
@@ -28,7 +29,7 @@ async function Chronicle({params}: {params: Promise<ChronicleParams>}) {
 
       <ViewerProvider>
         {/* @ts-expect-error: */}
-        <Content components={{img: Image}} />
+        <Content components={{img: Image, pre: CodeBlock}} />
         <ViewerModal>
           <ViewerCanvas />
         </ViewerModal>
