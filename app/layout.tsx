@@ -1,7 +1,7 @@
+import Header from '@/components/header/header.tsx'
 import type {Metadata} from 'next'
 import localFont from 'next/font/local'
 import type {FunctionComponent} from 'react'
-import Header from './components/header/header.tsx'
 import * as styles from './styles/app.css.ts'
 import {greenTheme} from './styles/themes/_colorscheme.css.ts'
 import './styles/global.css'

@@ -1,9 +1,9 @@
+import EntryCard from '@/features/blog/components/blog-masory/card/card.tsx'
+import Mansonry from '@/features/blog/components/blog-masory/masonry/masonry.tsx'
+import {getPosts} from '@/features/blog/utils.ts'
+import {makeCloudinary} from '@/utils/cloudinary.ts'
 import {Effect} from 'effect'
 import type {NextPage} from 'next'
-import {makeCloudinary} from '~/utils/cloudinary.ts'
-import EntryCard from './components/blog-masory/card/card.tsx'
-import Mansonry from './components/blog-masory/masonry/masonry.tsx'
-import {getPosts} from './utils.ts'
 
 const Chronicles: NextPage = async () => {
   const posts = await Effect.runPromise(getPosts)

@@ -16,7 +16,12 @@
     "jsx": "preserve",
     "plugins": [{ "name": "next" }],
     "exactOptionalPropertyTypes": true,
-    "paths": { "~/*": ["./app/*"] }
+    "paths": {
+      "~/*": ["./app/*"],
+      "@/components/*": ["./components/*"],
+      "@/features/*": ["./features/*"],
+      "@/utils/*": ["./utils/*"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

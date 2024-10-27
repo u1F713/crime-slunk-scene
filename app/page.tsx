@@ -1,8 +1,8 @@
+import {getPosts} from '@/features/blog/utils.ts'
+import {makeCloudinary} from '@/utils/cloudinary.ts'
 import {Effect} from 'effect'
 import type {NextPage} from 'next'
 import Link from 'next/link'
-import {makeCloudinary} from '~/utils/cloudinary.ts'
-import {getPosts} from './chronicles/utils.ts'
 import * as styles from './styles/app.css.ts'
 
 const Home: NextPage = async () => {

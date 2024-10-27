@@ -1,12 +1,12 @@
+import CodeBlock from '@/features/blog/components/code-block/code-block.tsx'
+import ViewerCanvas from '@/features/blog/components/image-viewer/canvas/image-canvas.tsx'
+import ViewerModal from '@/features/blog/components/image-viewer/modal/viewer-modal.tsx'
+import {ViewerProvider} from '@/features/blog/components/image-viewer/viewer-context.tsx'
+import Image from '@/features/blog/components/image.tsx'
+import {getPost, getPosts} from '@/features/blog/utils.ts'
+import {compileComponent} from '@/utils/content-collection.ts'
 import {Effect} from 'effect'
-import {compileComponent} from '~/utils/content-collection.ts'
 import * as styles from '../chronicles.css.ts'
-import CodeBlock from '../components/code-block/code-block.tsx'
-import ViewerCanvas from '../components/image-viewer/canvas/image-canvas.tsx'
-import ViewerModal from '../components/image-viewer/modal/viewer-modal.tsx'
-import {ViewerProvider} from '../components/image-viewer/viewer-context.tsx'
-import Image from '../components/image.tsx'
-import {getPost, getPosts} from '../utils.ts'
 
 interface ChronicleParams {
   slug: string

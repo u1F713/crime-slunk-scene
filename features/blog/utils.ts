@@ -1,6 +1,6 @@
 import path from 'node:path'
+import {getCollection} from '@/utils/content-collection.ts'
 import {Chunk, Effect, Stream, pipe} from 'effect'
-import {getCollection} from '~/utils/content-collection.ts'
 import {Post} from './post-schema.ts'
 
 export const getPosts = Effect.gen(function* () {

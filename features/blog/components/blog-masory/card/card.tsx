@@ -1,6 +1,6 @@
+import type {Post} from '@/features/blog/post-schema.ts'
 import Link from 'next/link'
 import type {FunctionComponent} from 'react'
-import type {Post} from '~/chronicles/post-schema.ts'
 import * as styles from './card.css.ts'
 
 const fmtDate = (date: Date | number) =>
