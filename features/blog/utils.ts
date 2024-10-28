@@ -1,20 +1,20 @@
 import path from 'node:path'
-import {getCollection} from '@/utils/content-collection.ts'
+import {getContent, readDirectory} from '@/lib/content/markdown.ts'
 import {Chunk, Effect, Stream, pipe} from 'effect'
 import {Post} from './post-schema.ts'
 
-export const getPosts = Effect.gen(function* () {
-  const directory = path.join(process.cwd(), 'app', 'chronicles', 'posts')
-  const posts = getCollection(directory, Post)
-  const collection = yield* Stream.runCollect(posts)
+const directory = readDirectory(
+  path.join(process.cwd(), 'app', 'chronicles', 'posts'),
+)
 
-  return Chunk.toArray(collection)
-})
+export const getPostCollection = pipe(
+  Stream.runCollect(Stream.flatMap(directory, getContent(Post))),
+  Effect.map(Chunk.toArray),
+)
 
 export const getPost = (name: string) =>
   pipe(
-    path.join(process.cwd(), 'app', 'chronicles', 'posts'),
-    directory => getCollection(directory, Post),
+    Stream.flatMap(directory, getContent(Post)),
     Stream.find(f => f.slug === name),
     Stream.runCollect,
     Effect.flatMap(Chunk.get(0)),

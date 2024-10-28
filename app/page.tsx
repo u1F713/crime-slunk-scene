@@ -1,4 +1,4 @@
-import {getPosts} from '@/features/blog/utils.ts'
+import {getPostCollection} from '@/features/blog/utils.ts'
 import {makeCloudinary} from '@/utils/cloudinary.ts'
 import {Effect} from 'effect'
 import type {NextPage} from 'next'
@@ -8,7 +8,7 @@ import * as styles from './styles/app.css.ts'
 const Home: NextPage = async () => {
   const cloud = Effect.runSync(makeCloudinary)
   const posts = await Effect.runPromise(
-    Effect.map(getPosts, c =>
+    Effect.map(getPostCollection, c =>
       c.sort((x, y) => x.data.pubDate.getTime() - y.data.pubDate.getTime()),
     ),
   )
@@ -41,7 +41,7 @@ const Home: NextPage = async () => {
         <h1>Latest posts</h1>
         <ul className={styles.latestPost}>
           {posts.map(c => (
-            <Link key={c.id} href={`/chronicles/${c.slug}`}>
+            <Link key={c.slug} href={`/chronicles/${c.slug}`}>
               <h2>{c.data.title}</h2>
               <p>{c.data.description}</p>
             </Link>
