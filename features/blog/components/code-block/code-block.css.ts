@@ -34,6 +34,20 @@ export const copyBtnClassName = style({
   },
 })
 
-globalStyle(`${codeBlockClassName} code`, {
+globalStyle(`${codeBlockClassName}:not([data-hide-line-numbers]) code`, {
   display: 'block',
+  counterReset: 'line 0',
+  counterIncrement: 'line 0',
 })
+
+globalStyle(
+  `${codeBlockClassName}:not([data-hide-line-numbers]) code .line::before`,
+  {
+    display: 'inline-block',
+    content: 'counter(line)',
+    counterIncrement: 'line',
+    width: '1em',
+    marginRight: '1.5em',
+    color: 'currentcolor',
+  },
+)

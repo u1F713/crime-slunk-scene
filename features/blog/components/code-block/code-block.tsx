@@ -12,6 +12,7 @@ import {
 type CodeBlockProps = React.ComponentProps<'pre'> & {
   'data-language': string
   'data-filename'?: string
+  'data-hide-line-numbers': boolean
   children: JSX.Element
 }
 
@@ -21,6 +22,7 @@ const CodeBlock: FunctionComponent<CodeBlockProps> = ({
   style,
   className,
   children,
+  ...attr
 }) => {
   const elementRef = useRef<HTMLPreElement>(null)
   const [textContent, setTextContent] = useState('')
@@ -43,7 +45,11 @@ const CodeBlock: FunctionComponent<CodeBlockProps> = ({
         <FileLabel name={metaFilename ?? lang} />
         <CopyBtn text={textContent} />
       </div>
-      <pre className={`${className} ${codeBlockClassName}`} ref={elementRef}>
+      <pre
+        className={`${className} ${codeBlockClassName}`}
+        ref={elementRef}
+        {...attr}
+      >
         {children}
       </pre>
     </div>
