@@ -14,7 +14,10 @@
     "incremental": true,
     "allowImportingTsExtensions": true,
     "jsx": "preserve",
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      { "name": "next" },
+      { "name": "typescript-plugin-css-modules" }
+    ],
     "exactOptionalPropertyTypes": true,
     "paths": {
       "~/*": ["./app/*"],
