@@ -1,3 +1,5 @@
+'use client'
+
 import {Match} from 'effect'
 import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react'
 import {useImage} from '../../image-context'

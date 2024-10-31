@@ -1,9 +1,9 @@
+import Image from '@/components/image.tsx'
 import CodeBlock from '@/features/blog/components/code-block/code-block.tsx'
-import ViewerCanvas from '@/features/blog/components/image-viewer/canvas/image-canvas.tsx'
-import ViewerModal from '@/features/blog/components/image-viewer/modal/viewer-modal.tsx'
-import {ViewerProvider} from '@/features/blog/components/image-viewer/viewer-context.tsx'
-import Image from '@/features/blog/components/image.tsx'
 import {getPost, getPostCollection} from '@/features/blog/utils.ts'
+import ViewerCanvas from '@/features/image-viewer/components/canvas/canvas.tsx'
+import ViewerModal from '@/features/image-viewer/components/modal/modal.tsx'
+import {ImageProvider} from '@/features/image-viewer/image-context.tsx'
 import {Effect} from 'effect'
 import * as styles from '../chronicles.css.ts'
 
@@ -26,13 +26,13 @@ async function Chronicle({params}: {params: Promise<ChronicleParams>}) {
         <p>{data.description}</p>
       </aside>
 
-      <ViewerProvider>
+      <ImageProvider>
         {/* @ts-expect-error: */}
         <Content components={{img: Image, pre: CodeBlock}} />
         <ViewerModal>
           <ViewerCanvas />
         </ViewerModal>
-      </ViewerProvider>
+      </ImageProvider>
     </div>
   )
 }

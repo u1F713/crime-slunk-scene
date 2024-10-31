@@ -1,8 +1,9 @@
 import {Cloudinary} from '@cloudinary/url-gen/index'
 import type {Meta, StoryObj} from '@storybook/react'
+import {useEffect} from 'react'
 import ViewerCanvas from './components/canvas/canvas.tsx'
 import ViewerModal from './components/modal/modal.tsx'
-import {ImageContext} from './image-context.tsx'
+import {ImageProvider, useImageDispatch} from './image-context.tsx'
 
 const cloudinary = new Cloudinary({
   cloud: {cloudName: process.env.PUBLIC_CLOUDINARY_CLOUD_NAME as string},
@@ -10,6 +11,12 @@ const cloudinary = new Cloudinary({
 const src = cloudinary.image('Converge.webp').createCloudinaryURL()
 
 function ModalWithCanvas() {
+  const dispatch = useImageDispatch()
+
+  useEffect(() => {
+    dispatch({type: 'set_image', payload: {src}})
+  }, [dispatch])
+
   return (
     <ViewerModal>
       <ViewerCanvas />
@@ -21,9 +28,9 @@ const meta = {
   title: 'image-viewer/ModalWithCanvas',
   component: ModalWithCanvas,
   decorators: Story => (
-    <ImageContext value={{src}}>
+    <ImageProvider>
       <Story />
-    </ImageContext>
+    </ImageProvider>
   ),
 } satisfies Meta<typeof ModalWithCanvas>
 

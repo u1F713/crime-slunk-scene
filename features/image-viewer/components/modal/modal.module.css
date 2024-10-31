@@ -10,3 +10,12 @@
   backdrop-filter: blur(20px);
   overflow: hidden;
 }
+
+.toolbar {
+  position: absolute;
+  bottom: 1em;
+  left: 50%;
+  transform: translate(-50%, 0em);
+  list-style: none;
+  color: white;
+}
