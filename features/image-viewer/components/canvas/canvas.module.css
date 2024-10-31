@@ -1,0 +1,10 @@
+.container {
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+}
+
+.image {
+  position: relative;
+  z-index: -1;
+}
