@@ -1,36 +1,33 @@
+import {themeContract} from '@/lib/design-system/theme.css.ts'
 import {style} from '@vanilla-extract/css'
-import {pageMaxWidth} from '~/styles/app.css'
-import {colorschemeContract} from '~/styles/themes/_colorscheme.css'
 
 export const header = style({
+  display: 'flex',
+  justifyContent: 'space-between',
+  margin: 'auto',
+  maxWidth: '70rem',
+  padding: '1rem',
+  fontSize: '1.1em',
   position: 'sticky',
-  zIndex: 99,
   top: 0,
-  padding: '1em .4em 0px',
+  zIndex: 50,
 })
 
-export const naviagtion = style({
+export const headerAbout = style({
+  fontWeight: '700',
+  color: `oklch(from ${themeContract.accentColor} 0.9 c h)`,
+})
+
+export const navigation = style({
   display: 'flex',
   justifyContent: 'space-between',
   gap: '1em',
-  margin: 'auto',
-  padding: '1em',
-  borderRadius: '10px',
-  background: `oklch(from ${colorschemeContract.accent} 20% c h / 50.5%)`,
-  boxShadow: `inset 0 0px 1px 1px ${colorschemeContract.accent}`,
-  backdropFilter: 'blur(30px)',
-  maxWidth: pageMaxWidth,
 })
 
-export const homepageLink = style({
-  fontWeight: 'bold',
-  color: `oklch(from ${colorschemeContract.accent} calc(l + 0.2) c h)`,
-})
+export const navigationLink = style({
+  textDecoration: 'underline',
 
-export const link = style({
-  color: `oklch(from ${colorschemeContract.accent} 75% c h)`,
-  textDecoration: 'none',
   ':hover': {
-    color: `oklch(from ${colorschemeContract.accent} 95% c h)`,
+    color: `oklch(from ${themeContract.accentColor} 0.7 c h)`,
   },
 })

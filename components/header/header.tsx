@@ -1,23 +1,22 @@
+import {glassSurfaces} from '@/lib/design-system/surfaces.css.ts'
 import Link from 'next/link'
 import type {FunctionComponent} from 'react'
 import * as styles from './header.css.ts'
 
 const Header: FunctionComponent = () => {
   return (
-    <header className={styles.header}>
-      <nav className={styles.naviagtion}>
-        <Link className={styles.homepageLink} href="/">
-          Crime Slunk Scene
-        </Link>
+    <header className={`${styles.header} ${glassSurfaces}`}>
+      <Link href="/">
+        <div className={styles.headerAbout}>Crime Slunk Scene</div>
+      </Link>
 
-        <ul style={{display: 'flex', gap: '1em'}}>
-          <Link className={styles.link} href="/about">
-            About
-          </Link>
-          <Link className={styles.link} href="/chronicles">
-            Blog
-          </Link>
-        </ul>
+      <nav className={styles.navigation}>
+        <Link className={styles.navigationLink} href="/chronicles">
+          Blog
+        </Link>
+        <Link className={styles.navigationLink} href="/projects">
+          Projects
+        </Link>
       </nav>
     </header>
   )
