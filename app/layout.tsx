@@ -1,10 +1,12 @@
 import Header from '@/components/header/header.tsx'
+import {blueTheme} from '@/lib/design-system/theme.css.ts'
 import type {Metadata} from 'next'
 import localFont from 'next/font/local'
 import type {FunctionComponent} from 'react'
 import * as styles from './styles/app.css.ts'
 import {greenTheme} from './styles/themes/_colorscheme.css.ts'
 import './styles/global.css'
+import '@/lib/design-system/global.css.ts'
 
 const jetBrainsMono = localFont({
   src: [
@@ -22,7 +24,7 @@ const RootLayout: FunctionComponent<{children: React.ReactNode}> = ({
   children,
 }) => (
   <html lang="en" className={jetBrainsMono.className}>
-    <body className={`${styles.page} ${greenTheme}`}>
+    <body className={`${styles.page} ${blueTheme} ${greenTheme}`}>
       <Header />
       <div className={styles.content}>{children}</div>
       <footer className={styles.footer}>
